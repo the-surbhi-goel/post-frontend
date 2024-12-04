@@ -25,7 +25,7 @@ const PageNotFound = ({ title }) => {
       </div>
       <div className="flex justify-center my-4">
         <Link to="/">
-          <Button>Back To Home Page</Button>
+          <Button classname="w-64 text-xl">Back To Home Page</Button>
         </Link>
       </div>
     </section>
