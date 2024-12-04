@@ -7,7 +7,7 @@ import Button from "./Button";
 
 const Header = () => {
   const [hidden, setHidden] = useState(true);
-  const [mode, setMode] = useState(JSON.parse(localStorage.getItem("mode")) || true);
+  const [mode, setMode] = useState(localStorage.getItem("mode") ? JSON.parse(localStorage.getItem("mode")) : true);
   const [isLogin, setIsLogin] = useState(JSON.parse(localStorage.getItem("isLogin")) || false);
 
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <nav className="bg-slate-100 border-gray-900 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src={Logo} className="h-8" alt="Logo" />
