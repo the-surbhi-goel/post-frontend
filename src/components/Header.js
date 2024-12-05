@@ -6,15 +6,14 @@ import { ReactComponent as HamBurgerSvg } from "../assets/svg/hamburger.svg";
 import Button from "./Button";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../firebase/config";
+import { useCart } from "../context-reducer/context/LoginContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { isLogin, contextLogin, contextLogout } = useCart();
   const [hidden, setHidden] = useState(true);
   const [mode, setMode] = useState(
     localStorage.getItem("mode") ? JSON.parse(localStorage.getItem("mode")) : true
-  );
-  const [isLogin, setIsLogin] = useState(
-    localStorage.getItem("isLogin") ? JSON.parse(localStorage.getItem("isLogin")) : false
   );
 
   const activeClass =
@@ -34,16 +33,16 @@ const Header = () => {
 
   const onLogin = () => {
     signInWithPopup(auth, provider).then((res) => {
-      setIsLogin(true);
       localStorage.setItem("isLogin", true);
+      contextLogin();
     });
   };
 
   const onLogout = () => {
     signOut(auth).then(() => {
-      setIsLogin(false);
       localStorage.setItem("isLogin", false);
       localStorage.removeItem("userDetails");
+      contextLogout();
     });
   };
 

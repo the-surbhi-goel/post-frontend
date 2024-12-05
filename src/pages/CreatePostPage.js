@@ -3,6 +3,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 import { useTitle } from "../hooks/useTitle";
+import { ToastContainer, toast } from "react-toastify";
 
 const CreatePostPage = () => {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ const CreatePostPage = () => {
       },
       createdAt: new Date().getTime(),
     }).then(() => {
-      alert("Post Added");
+      toast("Post Added");
+      setTimeout(() => navigate("/"), 3000);
       navigate("/");
     });
   };
@@ -73,6 +75,18 @@ const CreatePostPage = () => {
           Submit
         </button>
       </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </section>
   );
 };

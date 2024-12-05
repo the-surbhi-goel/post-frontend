@@ -1,17 +1,16 @@
-import React from "react";
 import Logo from "../assets/logo.png";
 import { auth, db } from "../firebase/config";
 import { deleteDoc, doc } from "firebase/firestore";
+import { useCart } from "../context-reducer/context/LoginContext";
 
 const PostCard = ({ post, onDeletePost }) => {
-  const isLogin = JSON.parse(localStorage.getItem("isLogin"));
+  const { isLogin } = useCart();
   const postRef = doc(db, "posts", post.id);
 
   const deletePost = () => {
     console.log("deletePost");
     deleteDoc(postRef).then(() => {
-      alert("Movie Deleted");
-      onDeletePost(post.id)
+      onDeletePost(post.id);
     });
   };
 
