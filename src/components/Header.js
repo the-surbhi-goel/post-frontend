@@ -34,9 +34,14 @@ const Header = () => {
 
   const onLogin = () => {
     signInWithPopup(auth, provider).then((res) => {
-      console.log("res ", res)
+      console.log("res ", res);
+      // const userDetails = {
+      //   name: res.user.displayName,
+      //   photoURL: res.user.photoURL,
+      // };
       setIsLogin(true);
       localStorage.setItem("isLogin", true);
+      // localStorage.setItem("userDetails", JSON.stringify(userDetails));
     });
   };
 
@@ -44,6 +49,7 @@ const Header = () => {
     signOut(auth).then(() => {
       setIsLogin(false);
       localStorage.setItem("isLogin", false);
+      localStorage.removeItem("userDetails");
     });
   };
 
@@ -155,14 +161,14 @@ const Header = () => {
                   Home
                 </NavLink>
               </li>
-              <li className="py-2.5">
+              {isLogin && <li className="py-2.5">
                 <NavLink
                   to={PATH.createPost}
                   className={({ isActive }) => (isActive ? activeClass : inActiveClass)}
                 >
                   Create Post
                 </NavLink>
-              </li>
+              </li>}
               <li>
                 {isLogin ? (
                   <Button onClick={() => onLogout()} classname="text-m w-17">
