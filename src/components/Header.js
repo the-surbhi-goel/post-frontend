@@ -4,13 +4,18 @@ import { NavLink, useNavigate } from "react-router-dom";
 import PATH from "../constants/Path";
 import { ReactComponent as HamBurgerSvg } from "../assets/svg/hamburger.svg";
 import Button from "./Button";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { auth, provider } from "../firebase/config";
 
 const Header = () => {
-  const [hidden, setHidden] = useState(true);
-  const [mode, setMode] = useState(localStorage.getItem("mode") ? JSON.parse(localStorage.getItem("mode")) : true);
-  const [isLogin, setIsLogin] = useState(JSON.parse(localStorage.getItem("isLogin")) || false);
-
   const navigate = useNavigate();
+  const [hidden, setHidden] = useState(true);
+  const [mode, setMode] = useState(
+    localStorage.getItem("mode") ? JSON.parse(localStorage.getItem("mode")) : true
+  );
+  const [isLogin, setIsLogin] = useState(
+    localStorage.getItem("isLogin") ? JSON.parse(localStorage.getItem("isLogin")) : false
+  );
 
   const activeClass =
     "block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500";
@@ -28,13 +33,18 @@ const Header = () => {
   }, [mode]);
 
   const onLogin = () => {
-    setIsLogin(true);
-    localStorage.setItem("isAuth", true);
+    signInWithPopup(auth, provider).then((res) => {
+      console.log("res ", res)
+      setIsLogin(true);
+      localStorage.setItem("isLogin", true);
+    });
   };
 
   const onLogout = () => {
-    setIsLogin(false);
-    localStorage.setItem("isAuth", false);
+    signOut(auth).then(() => {
+      setIsLogin(false);
+      localStorage.setItem("isLogin", false);
+    });
   };
 
   const handleSubmit = (e) => {
