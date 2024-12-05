@@ -34,14 +34,8 @@ const Header = () => {
 
   const onLogin = () => {
     signInWithPopup(auth, provider).then((res) => {
-      console.log("res ", res);
-      // const userDetails = {
-      //   name: res.user.displayName,
-      //   photoURL: res.user.photoURL,
-      // };
       setIsLogin(true);
       localStorage.setItem("isLogin", true);
-      // localStorage.setItem("userDetails", JSON.stringify(userDetails));
     });
   };
 
@@ -58,7 +52,7 @@ const Header = () => {
     const q = e.target.search.value;
     e.target.reset();
 
-    navigate("/search?q=" + q);
+    navigate(`${PATH.search}?q=${q}`);
   };
 
   return (
@@ -72,7 +66,17 @@ const Header = () => {
             </span>
           </a>
 
-          <div className="flex md:order-2">
+          <div className="flex md:order-3">
+            {isLogin ? (
+              <Button onClick={() => onLogout()} classname="text-xs font-medium mr-2 p-2">
+                <i className="bi bi-box-arrow-right"></i>
+              </Button>
+            ) : (
+              <Button onClick={() => onLogin()} classname="text-xs font-medium mr-2 p-2">
+                <i className="bi bi-google"></i>
+              </Button>
+            )}
+
             <button
               onClick={() => setMode(!mode)}
               data-tooltip-target="navbar-search-example-toggle-dark-mode-tooltip"
@@ -150,7 +154,7 @@ const Header = () => {
             </div>
 
             {/* Mobile Menu */}
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li className="py-2.5">
                 <NavLink
                   to="/"
@@ -161,25 +165,16 @@ const Header = () => {
                   Home
                 </NavLink>
               </li>
-              {isLogin && <li className="py-2.5">
-                <NavLink
-                  to={PATH.createPost}
-                  className={({ isActive }) => (isActive ? activeClass : inActiveClass)}
-                >
-                  Create Post
-                </NavLink>
-              </li>}
-              <li>
-                {isLogin ? (
-                  <Button onClick={() => onLogout()} classname="text-m w-17">
-                    <i className="bi bi-box-arrow-right"></i> Logout
-                  </Button>
-                ) : (
-                  <Button onClick={() => onLogin()} classname="text-m w-17">
-                    <i className="bi bi-google"></i> Login
-                  </Button>
-                )}
-              </li>
+              {isLogin && (
+                <li className="py-2.5">
+                  <NavLink
+                    to={PATH.createPost}
+                    className={({ isActive }) => (isActive ? activeClass : inActiveClass)}
+                  >
+                    Create Post
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
         </div>

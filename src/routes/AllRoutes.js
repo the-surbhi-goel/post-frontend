@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { CreatePostPage, HomePage, PageNotFound } from "../pages";
 import PATH from "../constants/Path";
 import ProtectedRoutes from "./ProtectedRoutes";
+import SearchPage from "../pages/SearchPage";
 
 const AllRoutes = () => {
   return (
@@ -9,6 +10,7 @@ const AllRoutes = () => {
       <Routes>
         <Route path="/" element={<HomePage title="All Post" />} />
         <Route path={PATH.home} element={<HomePage title="All Post" />} />
+        <Route path={PATH.search} element={<SearchPage />} />
         <Route
           path={PATH.createPost}
           element={
