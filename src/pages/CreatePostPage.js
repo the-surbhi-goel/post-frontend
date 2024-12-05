@@ -2,16 +2,15 @@ import React from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
+import { useTitle } from "../hooks/useTitle";
 
 const CreatePostPage = () => {
   const navigate = useNavigate();
   const postRef = collection(db, "posts");
+  useTitle("Create Post");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(e.target);
-    console.log(e.target.title.value);
 
     addDoc(postRef, {
       title: e.target.title.value,

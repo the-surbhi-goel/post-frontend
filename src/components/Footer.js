@@ -1,6 +1,3 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-
 const Footer = () => {
   return (
     <footer className="bg-white shadow dark:bg-gray-800">
