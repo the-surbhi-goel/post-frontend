@@ -2,6 +2,7 @@ import Logo from "../assets/logo.png";
 import { auth, db } from "../firebase/config";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useCart } from "../context-reducer/context/LoginContext";
+import parse from "html-react-parser";
 
 const PostCard = ({ post, onDeletePost }) => {
   const { isLogin } = useCart();
@@ -25,7 +26,7 @@ const PostCard = ({ post, onDeletePost }) => {
             )}
           </span>
         </div>
-        <p className="my-4 text-left">{post.description}</p>
+        <p className="my-4 text-left">{parse(post.description)}</p>
       </blockquote>
       <figcaption className="flex items-center justify-center ">
         <img className="rounded-full w-9 h-9" src={post.author?.photoURL || Logo} alt="img" />
